@@ -12,12 +12,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Check if workflow has been run before
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            console.log(__dirname);
+      - name: Hello world
+        run: |
+          ls -al
+          pwd
+          echo "Hello world"
+
+      # - name: Check if workflow has been run before
+      #   uses: actions/github-script@v7
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     script: |
+      #       console.log(__dirname);
 
       # const jsonRfcRegistry = require('.repo/rfc_registry.json');
 
