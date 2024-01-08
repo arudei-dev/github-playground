@@ -17,9 +17,11 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const jsonRfcRegistry = require('.repo/rfc_registry.json');
+            console.log(__dirname);
 
-            core.setOutput(JSON.stringify(jsonRfcRegistry, null, 2));
+      # const jsonRfcRegistry = require('.repo/rfc_registry.json');
+
+      # core.setOutput(JSON.stringify(jsonRfcRegistry, null, 2));
 
       # const prNumber = context.payload.pull_request.number;
       # const jsonRfcRegistry = require('./.repo/rfc_registry.json');
