@@ -17,8 +17,17 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const jsonRfcRegistry = require('.repo/rfc-registry.json');
-            console.log({jsonRfcRegistry})
+            let jsonRfcRegistry;
+
+            try {
+              jsonRfcRegistry = require('.repo/rfc-registry.json');
+            } catch (e) {
+              core.setFailed("RFC registry file is missing");
+              return;
+            }
+
+            const { rfcPRsRegistered } = jsonRfcRegistry;
+            console.log({rfcPRsRegistered})
 
       # console.log(process.cwd());
 
