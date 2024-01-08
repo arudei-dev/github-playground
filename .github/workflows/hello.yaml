@@ -14,5 +14,5 @@ jobs:
 
       - name: Hello world
         run: |
-          ls -al >> $GITHUB_OUTPUT
+          ls -al
           echo "Hello world"
