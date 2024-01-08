@@ -2,7 +2,7 @@ name: Hello Github Actions
 
 on:
   pull_request:
-    types: [ready_for_review]
+    types: [opened, reopened]
     branches:
       - main
 
@@ -39,7 +39,7 @@ jobs:
             const prNumber = context.payload.pull_request.number;
             const foundCurrentPRidx = rfcPRsRegistered.findIndex((pr) => pr.prNumber === prNumber);
 
-            console.log({foundCurrentPRidx});
+            console.log({foundCurrentPRidx, prNumber, rfcPRsRegistered});
 
             if (foundCurrentPRidx < 0) {
               // handle registration make commit IF this is an RFC PR
