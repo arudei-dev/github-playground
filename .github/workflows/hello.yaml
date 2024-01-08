@@ -1,6 +1,10 @@
 name: Hello Github Actions
 
-on: [push]
+on:
+  pull_request:
+    types: [ready_for_review]
+    branches:
+      - main
 
 jobs:
   do_something:
@@ -27,7 +31,20 @@ jobs:
             }
 
             const { rfcPRsRegistered } = jsonRfcRegistry;
-            console.log({rfcPRsRegistered})
+            if (!Array.isArray(rfcPRsRegistered)) {
+              core.setFailed("RFC PR registery entryn is missing");
+              return;
+            }
+
+            const prNumber = context.payload.pull_request.number;
+            const foundCurrentPRidx = rfcPRsRegistered.findIndex((pr) => pr.prNumber === prNumber);
+
+            console.log({foundCurrentPRidx});
+
+            if (foundCurrentPRidx < 0) {
+              // handle registration make commit IF this is an RFC PR
+              return;
+            }
 
       # console.log(process.cwd());
 
