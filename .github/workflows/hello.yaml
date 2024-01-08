@@ -17,7 +17,13 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log(process.cwd());
+            const path = require('path');
+
+            const jsonRfcRegistry = require(path.resolve(process.cwd(), '.repo/rfc_registry.json'));
+
+            console.log({jsonRfcRegistry});
+
+      # console.log(process.cwd());
 
       # const jsonRfcRegistry = require('.repo/rfc_registry.json');
 
