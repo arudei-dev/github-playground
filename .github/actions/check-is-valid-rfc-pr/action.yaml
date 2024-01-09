@@ -1,0 +1,41 @@
+name: Check if given PR is a valid RFC PR
+
+input:
+  given-pr-number:
+    description: Given PR number to be checked against
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout current branch
+      uses: actions/checkout@v4
+
+    - name: Validate current PR
+      id: validate-current-pr
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        result-encoding: string
+        script: |
+          const prNumber = Number("${{ inputs.given-pr-number }}");
+          const prTitle = context.payload.pull_request.title;
+
+          const REGEX_VALID_RFC_PR_TITLE = /^(rfc\(([a-z]|\-)+\))\:\s(\w|\s)+$/;
+
+          const validationChecks = {
+            titleFormatValid: true,
+            directorateExists: true,
+            documentExists: true,
+            documentNameFormatValid: true,
+            documentNameLengthOk: true,
+          };
+
+          if (!REGEX_VALID_RFC_PR_TITLE.test(prTitle)) {
+            validationChecks.titlePassed = false;
+          }
+
+          return JSON.stringify(Object.values(validationChecks).every((check) => check === true)); // placeholder
+
+      # PR directorate?
+      # return JSON.stringify(validationChecks);

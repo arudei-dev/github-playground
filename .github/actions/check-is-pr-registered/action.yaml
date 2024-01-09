@@ -1,0 +1,30 @@
+name: Check if given PR is registered in the RFC Registry
+
+input:
+  given-pr-number:
+    description: Given PR number to be checked against
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - uses: ./.github/actions/retrieve-rfc-registry
+      id: retrieve-rfc-registry
+      with:
+        output-var-name: rfcPRsRegistered
+
+    - name: Checkout current branch
+      uses: actions/checkout@v4
+
+    - name: Check if current PR number has been registered or not
+      id: check-if-pr-registered
+      uses: actions/github-script@v7
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        result-encoding: string
+        script: |
+          const prNumber = Number("${{ inputs.given-pr-number }}");
+
+          const rfcRegistry = JSON.parse("${{ steps.retrieve-rfc-registry.outputs.rfcPRsRegistered }}");
+
+          return rfcRegistry.includes(prNumber);
