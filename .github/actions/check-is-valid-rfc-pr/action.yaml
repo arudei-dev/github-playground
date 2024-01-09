@@ -7,7 +7,7 @@ inputs:
 
 outputs:
   result:
-    description: Boolean value indicating if the given PR is a valid RFC PR or not
+    description: Result of the validation
     value: ${{ steps.validate-current-pr.outputs.result }}
 
 runs:
@@ -39,7 +39,11 @@ runs:
             validationChecks.titlePassed = false;
           }
 
-          return JSON.stringify(Object.values(validationChecks).every((check) => check === true)); // placeholder
+          if (Object.values(validationChecks).every((check) => check)) {
+            return 'true';
+          }
+
+          return JSON.stringify(validationChecks);
 
       # PR directorate?
       # return JSON.stringify(validationChecks);

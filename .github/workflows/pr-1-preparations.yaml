@@ -12,7 +12,7 @@ on:
 
 jobs:
   does-pr-contains-valid-rfc:
-    name: "Does PR contains valid RFC?"
+    name: "Does current PR contain a valid RFC?"
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -45,8 +45,19 @@ jobs:
           echo "is-pr-registered=${{ steps.check-is-pr-registered.outputs.result || 'false' }}" >> $GITHUB_OUTPUT
           echo "is-valid-rfc-pr=${{ steps.check-is-valid-rfc-pr.outputs.result || 'false' }}" >> $GITHUB_OUTPUT
 
-          echo "::notice title=Is PR registered::${{ steps.check-is-pr-registered.outputs.result || 'false' }}"
-          echo "::notice title=Is PR valid RFC PR::${{ steps.check-is-pr-registered.outputs.result || 'false' }}"
+          notice_msg="- Is PR registered? ${{ steps.check-is-pr-registered.outputs.result || 'false' }}\n"
+
+          if [ "${{ steps.check-is-pr-registered.outputs.result }}" == "false" ]; then
+            current_msg="- Is PR a valid RFC PR? ${{ steps.check-is-valid-rfc-pr.outputs.result || 'false' }}\n"
+            notice_msg="${notice_msg}${current_msg}\n"
+
+            if [ "${{ steps.check-is-valid-rfc-pr.outputs.result }}" == "true" ]; then
+              # current_msg="  Validation failed on: ${{ steps.check-is-valid-rfc-pr.outputs.result }}\n"
+              # notice_msg="${notice_msg}${current_msg}\n"
+            fi
+          fi
+
+          echo "::notice title=${{ github.job }}::${notice_msg}"
 
   add-pr-to-rfc-registry:
     name: "Add current PR to the RFC registry"
