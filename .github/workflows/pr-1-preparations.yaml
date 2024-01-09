@@ -71,13 +71,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Read needs
-        run: |
-          echo "is-pr-registered ${{ needs.does-pr-contains-valid-rfc.outputs.is-pr-registered }}"
-          echo "is-valid-rfc-pr ${{ needs.does-pr-contains-valid-rfc.outputs.is-valid-rfc-pr }}"
-
-      # - id: update-rfc-registry-with-pr-number
-      #   name: "Update the RFC registry with PR number"
-      #   uses: ./.github/actions/update-rfc-registry-with-pr-number
-      #   with:
-      #     given-pr-number: ${{ github.event.pull_request.number }}
+      - id: update-rfc-registry-with-pr-number
+        name: "Update the RFC registry with PR number"
+        uses: ./.github/actions/update-rfc-registry-with-pr-number
+        with:
+          given-pr-number: ${{ github.event.pull_request.number }}
