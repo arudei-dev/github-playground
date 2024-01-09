@@ -48,7 +48,7 @@ jobs:
           echo "::notice title=${{ github.job }} / Is PR registered?::${{ steps.check-is-pr-registered.outputs.result || 'false' }}"
 
           if [ "${{ steps.check-is-pr-registered.outputs.result }}" == "false" ]; then
-            notice_msg="- ${{ steps.check-is-valid-rfc-pr.outputs.result || 'false' }}%0A"
+            notice_msg="- ${{ steps.check-is-valid-rfc-pr.outputs.result == 'true' && 'Passed' || 'Failed' }}%0A"
 
             if [ "${{ steps.check-is-valid-rfc-pr.outputs.result }}" != "true" ]; then
               current_msg="- Validation failed on: ${{ steps.check-is-valid-rfc-pr.outputs.result }}"
