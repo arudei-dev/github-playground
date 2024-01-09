@@ -18,8 +18,8 @@ jobs:
       run:
         working-directory: .
     outputs:
-      is-pr-registered: ${{ steps.check-is-pr-registered.outputs.is-pr-registered }}
-      is-valid-rfc-pr: ${{ steps.check-is-valid-rfc-pr.outputs.is-valid-rfc-pr }}
+      is-pr-registered: ${{ steps.set-job-outputs.outputs.is-pr-registered }}
+      is-valid-rfc-pr: ${{ steps.set-job-outputs.outputs.is-valid-rfc-pr }}
     steps:
       - name: Checkout latest main
         uses: actions/checkout@v4
@@ -41,6 +41,7 @@ jobs:
         if: steps.check-is-pr-registered.outputs.result == 'false'
 
       - name: Setting up Job outputs
+        id: set-job-outputs
         run: |
           echo "is-pr-registered=${{ steps.check-is-pr-registered.outputs.result || false }}" >> $GITHUB_OUTPUT
           echo "is-valid-rfc-pr=${{ steps.check-is-valid-rfc-pr.outputs.result || false }}" >> $GITHUB_OUTPUT
