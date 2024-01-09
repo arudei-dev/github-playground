@@ -76,4 +76,5 @@ jobs:
         uses: ./.github/actions/update-rfc-registry-with-pr-number
         with:
           given-pr-number: ${{ github.event.pull_request.number }}
+          secret-github-token: ${{ secrets.GITHUB_TOKEN }}
           secret-approver-token: ${{ secrets.PAT_ARUDEI_DEV_ALTEREGO }}
