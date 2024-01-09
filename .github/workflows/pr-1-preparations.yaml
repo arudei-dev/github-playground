@@ -61,7 +61,7 @@ jobs:
   add-pr-to-rfc-registry:
     name: "Add current PR to the RFC registry"
     needs: [does-pr-contains-valid-rfc]
-    if: needs.does-pr-contains-valid-rfc.outputs.is-pr-registered == 'false' && needs.does-pr-contains-valid-rfc.outputs.is-valid-rfc-pr == 'true'
+    # if: needs.does-pr-contains-valid-rfc.outputs.is-pr-registered == 'false' && needs.does-pr-contains-valid-rfc.outputs.is-valid-rfc-pr == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -70,8 +70,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: update-rfc-registry-with-pr-number
-        name: "Update the RFC registry with PR number"
-        uses: ./.github/actions/update-rfc-registry-with-pr-number
-        with:
-          given-pr-number: ${{ github.event.pull_request.number }}
+      - name: Read needs
+        run: |
+          echo "is-pr-registered ${{ needs.does-pr-contains-valid-rfc.outputs.is-pr-registered }}"
+          echo "is-valid-rfc-pr ${{ needs.does-pr-contains-valid-rfc.outputs.is-valid-rfc-pr }}"
+
+      # - id: update-rfc-registry-with-pr-number
+      #   name: "Update the RFC registry with PR number"
+      #   uses: ./.github/actions/update-rfc-registry-with-pr-number
+      #   with:
+      #     given-pr-number: ${{ github.event.pull_request.number }}
