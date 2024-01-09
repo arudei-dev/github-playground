@@ -45,19 +45,18 @@ jobs:
           echo "is-pr-registered=${{ steps.check-is-pr-registered.outputs.result || 'false' }}" >> $GITHUB_OUTPUT
           echo "is-valid-rfc-pr=${{ steps.check-is-valid-rfc-pr.outputs.result || 'false' }}" >> $GITHUB_OUTPUT
 
-          notice_msg="- Is PR registered? ${{ steps.check-is-pr-registered.outputs.result || 'false' }}\n"
+          echo "::notice title=${{ github.job }} / Is PR registered?::${{ steps.check-is-pr-registered.outputs.result || 'false' }}"
 
           if [ "${{ steps.check-is-pr-registered.outputs.result }}" == "false" ]; then
-            current_msg="- Is PR a valid RFC PR? ${{ steps.check-is-valid-rfc-pr.outputs.result || 'false' }}\n"
-            notice_msg="${notice_msg}${current_msg}\n"
+            notice_msg="- ${{ steps.check-is-valid-rfc-pr.outputs.result || 'false' }}%0A"
 
             if [ "${{ steps.check-is-valid-rfc-pr.outputs.result }}" == "true" ]; then
-              current_msg="  Validation failed on: ${{ steps.check-is-valid-rfc-pr.outputs.result }}\n"
-              notice_msg="${notice_msg}${current_msg}\n"
+              current_msg="- Validation failed on: ${{ steps.check-is-valid-rfc-pr.outputs.result }}"
+              notice_msg="${notice_msg}${current_msg}%0A"
             fi
-          fi
 
-          echo "::notice title=${{ github.job }}::${notice_msg}"
+            echo "::notice title=${{ github.job }} / Is PR a valid RFC PR?::${{ steps.check-is-pr-registered.outputs.result || 'false' }}"
+          fi
 
   add-pr-to-rfc-registry:
     name: "Add current PR to the RFC registry"
