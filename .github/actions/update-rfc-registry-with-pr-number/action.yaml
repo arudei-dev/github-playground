@@ -1,6 +1,9 @@
 name: Update the RFC Registry with the given PR number
 
 inputs:
+  secret-approver-token:
+    description: Secret approver token to be used for auto-approving the PR
+    required: true
   given-pr-number:
     description: Given PR number to be checked against
     required: true
@@ -59,7 +62,7 @@ runs:
     - name: Auto-approve PR
       uses: juliangruber/approve-pull-request-action@v2
       with:
-        github-token: ${{ secrets.PAT_ARUDEI_DEV_ALTEREGO }}
+        github-token: ${{ inputs.secret-approver-token }}
         number: ${{ steps.commit-and-push.outputs.pull-request-number }}
 
     - name: Merge PR
