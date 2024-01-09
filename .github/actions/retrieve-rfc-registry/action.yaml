@@ -3,7 +3,6 @@ name: Retrieve the RFC Registry metadata
 outputs:
   result:
     description: RFC Registry metadata
-    required: true
     value: ${{ steps.fetch-and-cache-meta.outputs.result }}
 
 runs:

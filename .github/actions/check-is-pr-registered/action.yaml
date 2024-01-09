@@ -8,7 +8,6 @@ input:
 outputs:
   result:
     description: Boolean value indicating if the given PR number is registered or not
-    required: true
     value: ${{ steps.check-if-pr-registered.outputs.result }}
 
 runs:
