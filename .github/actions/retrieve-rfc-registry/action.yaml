@@ -13,6 +13,7 @@ runs:
       with:
         ref: main
         sparse-checkout: |
+          .github
           .repo
 
     - name: Fetch and cache metadata
