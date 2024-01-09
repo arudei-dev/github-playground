@@ -1,0 +1,93 @@
+name: Hello Github Actions
+
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - main
+
+jobs:
+  do_something:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: .
+
+    steps:
+      - uses: actions/checkout@v4 // need checkout master
+
+      - name: Check if workflow has been run before
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const script = require('./.github/actions/check-pr-rfc.js')
+            script({ github, context })
+
+      # let jsonRfcRegistry;
+
+      # try {
+      #   jsonRfcRegistry = require('.repo/rfc-registry.json');
+      # } catch (e) {
+      #   core.setFailed("RFC registry file is missing");
+      #   return;
+      # }
+
+      # const { rfcPRsRegistered } = jsonRfcRegistry;
+      # if (!Array.isArray(rfcPRsRegistered)) {
+      #   core.setFailed("RFC PR registery entryn is missing");
+      #   return;
+      # }
+
+      # const prTitle = context.payload.pull_request.title;
+      # const validRfcTitleRegex = /^(rfc\(([a-z]|\-)+\))\:\s(\w|\s)+$/;
+
+      # if (!validRfcTitleRegex.test(prTitle)) {
+      #   // TODO: Not valid RFC PR title, skip all checks
+      #   return;
+      # }
+
+      # // TODO: Check if RFC directorate is valid or not
+
+      # const currentPrNumber = context.payload.pull_request.number;
+      # const foundCurrentPRidx = rfcPRsRegistered.findIndex((registeredPR) => registeredPR === currentPrNumber);
+
+      # if (foundCurrentPRidx < 0) {
+      #   // handle registration make commit IF this is an RFC PR
+      #   return;
+      # }
+
+      # // handle setting the PR state (make comment?) as an RFC PR.
+
+      # console.log(process.cwd());
+
+      # const jsonRfcRegistry = require('.repo/rfc_registry.json');
+
+      # core.setOutput(JSON.stringify(jsonRfcRegistry, null, 2));
+
+      # const prNumber = context.payload.pull_request.number;
+      # const jsonRfcRegistry = require('./.repo/rfc_registry.json');
+
+      # // Handle if not available
+
+      # const { rfcPRsRegistered } = jsonRfcRegistry;
+
+      # if (!Array.isArray(rfcPRsRegistered)) {
+      #   // should be unreachable, file is missing
+      #   core.setFailed("RFC registry file is missing");
+      #   return;
+      # }
+
+      # const foundCurrentPRidx = rfcPRsRegistered.findIndex((pr) => pr.prNumber === prNumber);
+
+      # if (foundCurrentPRidx < 0) {
+      #   // handle registration make commit IF this is an RFC PR
+      #   return;
+      # }
+
+      # // handle setting the PR (make comment?) IF this is an RFC PR
+
+      # - name: Hello world
+      #   run: |
+      #     ls -al
+      #     echo "Hello world"
