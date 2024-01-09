@@ -45,6 +45,9 @@ jobs:
           echo "is-pr-registered=${{ steps.check-is-pr-registered.outputs.result || 'false' }}" >> $GITHUB_OUTPUT
           echo "is-valid-rfc-pr=${{ steps.check-is-valid-rfc-pr.outputs.result || 'false' }}" >> $GITHUB_OUTPUT
 
+          echo "::notice title=Is PR registered::${{ steps.check-is-pr-registered.outputs.result || 'false' }}"
+          echo "::notice title=Is PR valid RFC PR::${{ steps.check-is-pr-registered.outputs.result || 'false' }}"
+
   add-pr-to-rfc-registry:
     name: "Add current PR to the RFC registry"
     needs: does-pr-contains-valid-rfc
