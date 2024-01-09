@@ -14,9 +14,9 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - name: Retrieve RFC Registry metadata
+    - id: retrieve-rfc-registry
+      name: Retrieve RFC Registry metadata
       uses: ./.github/actions/retrieve-rfc-registry
-      id: retrieve-rfc-registry
 
     - name: Checkout current branch
       uses: actions/checkout@v4

@@ -21,11 +21,13 @@ jobs:
       - uses: actions/checkout@v4
 
       - id: check-is-pr-registered
+        name: "Check if PR is registered in the RFC registry"
         uses: ./.github/actions/check-is-pr-registered
         with:
           given-pr-number: ${{ github.event.pull_request.number }}
 
       - id: check-is-valid-rfc-pr
+        name: "Check if PR is a valid RFC"
         uses: ./.github/actions/check-is-valid-rfc-pr
         if: steps.check-is-pr-registered.outputs.is-pr-registered == 'false'
 
@@ -44,6 +46,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - id: update-rfc-registry-with-pr-number
+        name: "Update the RFC registry with PR number"
         uses: ./.github/actions/update-rfc-registry-with-pr-number
         with:
           given-pr-number: ${{ github.event.pull_request.number }}
