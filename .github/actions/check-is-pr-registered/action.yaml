@@ -5,6 +5,12 @@ input:
     description: Given PR number to be checked against
     required: true
 
+outputs:
+  result:
+    description: Boolean value indicating if the given PR number is registered or not
+    required: true
+    value: ${{ steps.check-if-pr-registered.outputs.result }}
+
 runs:
   using: "composite"
   steps:

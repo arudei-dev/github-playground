@@ -1,5 +1,11 @@
 name: Retrieve the RFC Registry metadata
 
+outputs:
+  result:
+    description: RFC Registry metadata
+    required: true
+    value: ${{ steps.fetch-and-cache-meta.outputs.result }}
+
 runs:
   using: "composite"
   steps:
@@ -11,6 +17,7 @@ runs:
           .repo
 
     - name: Fetch and cache metadata
+      id: fetch-and-cache-meta
       uses: actions/github-script@v7
       with:
         result-encoding: string

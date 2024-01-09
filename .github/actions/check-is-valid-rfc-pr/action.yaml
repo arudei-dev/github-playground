@@ -5,6 +5,12 @@ input:
     description: Given PR number to be checked against
     required: true
 
+outputs:
+  result:
+    description: Boolean value indicating if the given PR is a valid RFC PR or not
+    required: true
+    value: ${{ steps.validate-current-pr.outputs.result }}
+
 runs:
   using: composite
   steps:
