@@ -19,12 +19,12 @@ jobs:
       is-valid-rfc-pr: ${{ steps.check-is-valid-rfc-pr.outputs.is-valid-rfc-pr }}
     steps:
       - id: check-is-pr-registered
-        uses: ./github/actions/check-is-pr-registered
+        uses: ./.github/actions/check-is-pr-registered
         with:
           given-pr-number: ${{ github.event.pull_request.number }}
 
       - id: check-is-valid-rfc-pr
-        uses: ./github/actions/check-is-valid-rfc-pr
+        uses: ./.github/actions/check-is-valid-rfc-pr
         if: steps.check-is-pr-registered.outputs.is-pr-registered == 'false'
 
       - name: Setting up Job outputs
@@ -40,6 +40,6 @@ jobs:
 
     steps:
       - id: update-rfc-registry-with-pr-number
-        uses: ./github/actions/update-rfc-registry-with-pr-number
+        uses: ./.github/actions/update-rfc-registry-with-pr-number
         with:
           given-pr-number: ${{ github.event.pull_request.number }}
