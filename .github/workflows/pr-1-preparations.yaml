@@ -55,7 +55,7 @@ jobs:
               notice_msg="${notice_msg}${current_msg}%0A"
             fi
 
-            echo "::notice title=${{ github.job }} / Is PR a valid RFC PR?::${{ steps.check-is-pr-registered.outputs.result || 'false' }}"
+            echo "::notice title=${{ github.job }} / Is PR a valid RFC PR?::${notice_msg}"
           fi
 
   add-pr-to-rfc-registry:
