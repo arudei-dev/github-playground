@@ -28,6 +28,6 @@ runs:
         script: |
           const prNumber = Number("${{ inputs.given-pr-number }}");
 
-          const rfcRegistry = JSON.parse("${{ steps.retrieve-rfc-registry.outputs.result }}");
+          const rfcRegistry = JSON.parse('${{ steps.retrieve-rfc-registry.outputs.result }}');
 
           return rfcRegistry.rfcPRsRegistered.includes(prNumber);
