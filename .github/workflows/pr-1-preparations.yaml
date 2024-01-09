@@ -21,6 +21,14 @@ jobs:
       is-pr-registered: ${{ steps.check-is-pr-registered.outputs.is-pr-registered }}
       is-valid-rfc-pr: ${{ steps.check-is-valid-rfc-pr.outputs.is-valid-rfc-pr }}
     steps:
+      - name: Checkout latest main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          sparse-checkout: |
+            .github
+            .repo
+
       - id: check-is-pr-registered
         name: "Check if PR is registered in the RFC registry"
         uses: ./.github/actions/check-is-pr-registered
