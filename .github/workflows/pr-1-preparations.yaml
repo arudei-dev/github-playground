@@ -18,6 +18,8 @@ jobs:
       is-pr-registered: ${{ steps.check-is-pr-registered.outputs.is-pr-registered }}
       is-valid-rfc-pr: ${{ steps.check-is-valid-rfc-pr.outputs.is-valid-rfc-pr }}
     steps:
+      - uses: actions/checkout@v4
+
       - id: check-is-pr-registered
         uses: ./.github/actions/check-is-pr-registered
         with:
@@ -39,6 +41,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - uses: actions/checkout@v4
+
       - id: update-rfc-registry-with-pr-number
         uses: ./.github/actions/update-rfc-registry-with-pr-number
         with:
