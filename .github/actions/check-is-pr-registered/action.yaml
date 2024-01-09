@@ -1,6 +1,6 @@
 name: Check if given PR is registered in the RFC Registry
 
-input:
+inputs:
   given-pr-number:
     description: Given PR number to be checked against
     required: true

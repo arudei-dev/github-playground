@@ -1,6 +1,6 @@
 name: Update the RFC Registry with the given PR number
 
-input:
+inputs:
   given-pr-number:
     description: Given PR number to be checked against
     required: true
