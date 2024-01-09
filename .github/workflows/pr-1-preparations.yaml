@@ -52,8 +52,8 @@ jobs:
             notice_msg="${notice_msg}${current_msg}\n"
 
             if [ "${{ steps.check-is-valid-rfc-pr.outputs.result }}" == "true" ]; then
-              # current_msg="  Validation failed on: ${{ steps.check-is-valid-rfc-pr.outputs.result }}\n"
-              # notice_msg="${notice_msg}${current_msg}\n"
+              current_msg="  Validation failed on: ${{ steps.check-is-valid-rfc-pr.outputs.result }}\n"
+              notice_msg="${notice_msg}${current_msg}\n"
             fi
           fi
 
