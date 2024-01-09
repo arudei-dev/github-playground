@@ -18,7 +18,6 @@ runs:
     - name: Fetch and cache metadata
       uses: actions/github-script@v7
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           let jsonRfcRegistry;
 

@@ -20,7 +20,6 @@ runs:
       id: check-if-pr-registered
       uses: actions/github-script@v7
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
         result-encoding: string
         script: |
           const prNumber = Number("${{ inputs.given-pr-number }}");
