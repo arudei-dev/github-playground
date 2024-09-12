@@ -1,0 +1,97 @@
+# name: "Step 0 - Determine PR type"
+
+# on:
+#   pull_request:
+#     types: [ready_for_review]
+#     branches:
+#       - main
+
+#     # types: [opened, synchronize, reopened, ready_for_review]
+# jobs:
+#   pre_checks:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         working-directory: .
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+#         with:
+#           sparse-checkout: |
+#             .meta
+
+#       - name: Check if workflow has been run before
+#         uses: actions/github-script@v7
+#         with:
+#           github-token: ${{ secrets.GITHUB_TOKEN }}
+#           script: |
+#             const prNumber = context.payload.pull_request.number;
+#             const jsonRfcRegistry = require('./.repo/rfc_registry.json');
+
+#             // Handle if not available
+
+#             const { rfcPRsRegistered } = jsonRfcRegistry;
+
+#             if (!Array.isArray(rfcPRsRegistered)) {
+#               // should be unreachable, file is missing
+#               core.setFailed("RFC registry file is missing");
+#               return;
+#             }
+
+#             const foundCurrentPRidx = rfcPRsRegistered.findIndex((pr) => pr.prNumber === prNumber);
+
+#             if (foundCurrentPRidx < 0) {
+#               // handle registration make commit IF this is an RFC PR
+#               return;
+#             }
+
+#             // handle setting the PR (make comment?) IF this is an RFC PR
+
+#       # - name: Cache registry result as artifacts
+#       #   uses: actions/upload-artifact@v2
+#       #   with:
+#       #     name: rfc_registry
+#       #     path: .meta/rfc_registry.json
+
+#   check_if_valid_rfc:
+#     runs-on: ubuntu-latest
+#     defaults:
+#       run:
+#         working-directory: .
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+#         with:
+#           sparse-checkout: |
+#             current
+
+#       - name: Check if there's a valid RFC document
+#         run: |
+#           if [ -f current/rfc.md ]; then
+#             echo "RFC document found"
+#             exit 0
+#           else
+#             echo "No RFC document found"
+#             exit 1
+#           fi
+
+#       # - name: Check if PR is a valid RFC
+#       #   uses: actions/github-script@v4
+#       #   with:
+#       #     github-token: ${{ secrets.GITHUB_TOKEN }}
+#       #     script: |
+#       #       const pr = context.payload.pull_request;
+#       #       const title = pr.title;
+#       #       const body = pr.body;
+#       #       const isDraft = pr.draft;
+#       #       const isRFC = title.startsWith("RFC:");
+#       #       const isRFCBody = body.startsWith("## Summary");
+#       #       const isRFCValid = isRFC && isRFCBody && !isDraft;
+#       #       core.setOutput("isRFCValid", isRFCValid);
+#       #       core.setOutput("isDraft", isDraft);
+#       #       core.setOutput("isRFC", isRFC);
+#       #       core.setOutput("isRFCBody", isRFCBody);
+#       #       core.setOutput("title", title);
+#       #       core.setOutput("body", body);
+#       #       core.setOutput("pr", pr);

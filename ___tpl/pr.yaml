@@ -1,0 +1,40 @@
+name: PR Preparations
+
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - main
+
+jobs:
+
+  # determine-pr-type:
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - name: Checkout latest master
+  #       uses: actions/checkout@v4
+  #       with:
+  #         ref: main
+  #         sparse-checkout: |
+  #           .repo
+
+  #     - name: Fetch and cache metadata
+  #       uses: actions/github-script@v7
+  #       with:
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+  #         script: |
+  #           let jsonRfcRegistry;
+
+  #           try {
+  #             jsonRfcRegistry = require('.repo/rfc-registry.json');
+  #           } catch (e) {
+  #             core.setFailed("RFC registry file is missing");
+  #             return;
+  #           }
+
+  #           const { rfcPRsRegistered } = jsonRfcRegistry;
+  #           if (!Array.isArray(rfcPRsRegistered)) {
+  #             core.setFailed("RFC PR registery entry is missing!");
+  #             return;
+  #           }

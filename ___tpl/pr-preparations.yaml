@@ -1,0 +1,39 @@
+name: PR Preparations
+
+# Only allows for one workflow run at a time as to avoid race conditions.
+concurrency:
+  group: ${{ github.workflow }}
+
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches:
+      - main
+
+jobs:
+  check-is-pr-an-rfc-pr:
+    name: Check if current PR is an RFC PR
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ./github/actions/check-is-pr-registered
+        id: check-is-pr-registered
+        with:
+          given-pr-number: ${{ github.event.pull_request.number }}
+
+      - uses: ./github/actions/check-is-valid-rfc-pr
+        id: check-is-valid-rfc-pr
+
+      # check if pr rfc
+      # if not but registered, fail check
+
+      # - name: If not registered, do a check to see if it is an RFC PR
+      #   if: steps.check-is-pr-registered.outputs.isRegistered == 'false'
+      #   run:
+
+      # - name: If registered, ...
+      #     # Should be still checking if this got retriggered
+    # steps:
+    #   - uses: ./.github/actions/retrieve-rfc-registry
+    #     id: retrieve-rfc-registry
+    #     with:
+    #       output-var-name: rfcPRsRegistered
